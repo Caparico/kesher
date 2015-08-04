@@ -1,0 +1,29 @@
+<div class="row" ng-controller="contactsCtrl">
+   <div class="large-10 columns">
+    <h3>אנשי הקשר שלך ({{contacts.length}})</h3>
+    <table>
+        <thead>
+            <tr>
+                <th width="200px;">שם</th>
+                <th width="200px;">חברה</th>
+                <th width="25%;">אימייל</th>
+                <th width="25%;">פעולות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="contact in contacts">
+                <td><a href="#">{{contact.name}}</a></td>
+                <td>{{contact.copmany}}</td>
+                <td>{{contact.email}}</td>
+                <td>
+                    <a class="button tiny" ng-click="shoeEditForm(contact)">עריכה</a>
+                    <a class="button tiny alert" ng-click="removeContact(contact)">מחיקה</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="small-12 large-2 columns">
+        <a class="button large" ng-click="showAddForm()">+</a>
+    </div>
+</div>
