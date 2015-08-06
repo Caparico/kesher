@@ -33,3 +33,9 @@ tr, td, th {
   content: "";
   padding: 0;
 }
+::selection {
+  background: #33CD7B /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #33CD7B; /* Gecko Browsers */
+}

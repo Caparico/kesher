@@ -1,5 +1,77 @@
 <div class="row" ng-controller="contactsCtrl">
-   <div class="large-10 columns">
+  <div class="large-10 columns">
+<!--  message DIV-->
+     <div data-alert ng-show="msg" class="alert-box">{{ msg }}</div>
+  <form ng-submit="addFormSubmit()" ng-show="addFormShow">
+		<h3>הוספת אנשי קשר</h3>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>אימייל:
+					<input type="text" ng-model="email" placeholder="אימייל" required />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>שם:
+					<input type="text" ng-model="name" placeholder="שם" required tabindex=1/>
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>טלפון בעבודה:
+					<input type="text" ng-model="work_phone" placeholder="טלפון בעבודה"/>
+				</label>
+			</div>
+            <div class="large-6 columns">
+				<label>מקום העבודה:
+					<input type="text" ng-model="company" placeholder="שם מקום העבודה" />
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>טלפון בבית:
+					<input type="text" ng-model="home_phone" placeholder="טלפון בבית"/>
+				</label>
+			</div>
+		    <div class="large-6 columns">
+				<label>נייד:
+					<input type="text" ng-model="mobile_phone" placeholder="נייד"/>
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>עיר:
+					<input type="text" ng-model="city" placeholder="עיר"/>
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>כתובת:
+					<input type="text" ng-model="street_address" placeholder="כתובת"/>
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>מדינה:
+					<input type="text" ng-model="state" placeholder="מדינה"/>
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>מיקוד:
+					<input type="text" ng-model="zip" placeholder="מיקוד"/>
+				</label>
+			</div>
+		
+		</div>
+		<div class="row">
+			<div class="large-12 column">
+				<input type="submit" value="הוספה" class="button">
+			</div>
+		</div>
+	</form>
+     
     <h3>אנשי הקשר שלך ({{contacts.length}})</h3>
     <table>
         <thead>
@@ -16,7 +88,7 @@
                 <td>{{contact.copmany}}</td>
                 <td>{{contact.email}}</td>
                 <td>
-                    <a class="button tiny" ng-click="shoeEditForm(contact)">עריכה</a>
+                    <a class="button tiny" ng-click="showEditForm(contact)">עריכה</a>
                     <a class="button tiny alert" ng-click="removeContact(contact)">מחיקה</a>
                 </td>
             </tr>
@@ -24,6 +96,7 @@
     </table>
     </div>
     <div class="small-12 large-2 columns">
-        <a class="button large" ng-click="showAddForm()">+</a>
+        <a class="button large" ng-click="showAddForm()" ng-hide="addFormShow">+</a>
+        <a class="button large" ng-click="hide()" ng-show="addFormShow">-</a>
     </div>
 </div>
