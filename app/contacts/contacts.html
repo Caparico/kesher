@@ -1,7 +1,26 @@
 <div class="row" ng-controller="contactsCtrl">
   <div class="large-10 columns">
-<!--  message DIV-->
+    <!--  message DIV-->
      <div data-alert ng-show="msg" class="alert-box">{{ msg }}</div>
+    <!--     End message div-->
+    <!--    Show contact details -->
+    <div class="row" ng-show="contactShow">
+        <div class="panel">
+            <h3>{{name}}</h3>
+            <ul>
+                <li><strong>חברה</strong>: {{company}}</li>
+                <li><strong>אימייל</strong>: {{email}}</li>
+                <h5>מספרי טלפון</h5>
+                <li><strong>עבודה</strong>: {{work_phone}}</li>
+                <li><strong>בית</strong>: {{home_phone}}</li>
+                <li><strong>נייד</strong>: {{mobile_phone}}</li>
+                <h5>כתובת</h5>
+                <li>{{street_address}}</li>
+                <li>{{city}}, {{state}} {{zipcode}}</li>
+            </ul>
+        </div>
+    </div>
+    <!--    End contact details-->
   <form ng-submit="addFormSubmit()" ng-show="addFormShow">
 		<h3>הוספת אנשי קשר</h3>
 		<div class="row">			
@@ -60,7 +79,7 @@
 			</div>
 			<div class="large-6 columns">
 				<label>מיקוד:
-					<input type="text" ng-model="zip" placeholder="מיקוד"/>
+					<input type="text" ng-model="zipcode" placeholder="מיקוד"/>
 				</label>
 			</div>
 		
@@ -84,8 +103,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="contact in contacts">
-                <td><a href="#">{{contact.name}}</a></td>
-                <td>{{contact.copmany}}</td>
+                <td><a ng-click="showContact(contact)">{{contact.name}}</a></td>
+                <td>{{contact.company}}</td>
                 <td>{{contact.email}}</td>
                 <td>
                     <a class="button tiny" ng-click="showEditForm(contact)">עריכה</a>

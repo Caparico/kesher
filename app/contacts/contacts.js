@@ -12,7 +12,7 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 // contacts controller
 .controller('contactsCtrl', ['$scope', '$firebaseArray', function ($scope, $firebaseArray) {
     
-    // init firebase
+    // init firebase connection
     var ref = new Firebase('https://kesher.firebaseio.com/contacts');
     
     // get contacts
@@ -30,7 +30,7 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
     $scope.addFormSubmit = function () {
         console.log('Adding your data...');
         
-        // if submitted - assign values to variables, else assign to null
+        // if submitted - assign a value to each variable, else assign to null
         if ($scope.name) { var name = $scope.name } else { name = null; }
 		if ($scope.email) { var email = $scope.email } else { email = null; }
 		if ($scope.company) { var company = $scope.company } else { company = null; }
@@ -40,28 +40,28 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 		if ($scope.street_address) { var street_address = $scope.street_address } else { street_address = null; }
 		if ($scope.city) { var city = $scope.city } else { city = null; }
 		if ($scope.state) { var state = $scope.state } else { state = null; }
-		if ($scope.zip) { var zip = $scope.zip } else { zip = null; }
+		if ($scope.zipcode) { var zipcode = $scope.zipcode } else { zipcode = null; }
         
         // Build the object being sent to firebase
         $scope.contacts.$add({
             name: name,
-            email: email,
-            company: company,
-            phone: [
-                {
-                    mobile: mobile_phone,
-                    home: home_phone,
-                    work: work_phone
-                }
-            ],
-            address: [
-                {
-                    stree_address: street_address,
-                    city: city,
-                    state: state,
-                    zipcode: zip
-                }
-            ]
+			email: email,
+			company: company,
+			phones:[
+				{
+					mobile: mobile_phone,
+					home: home_phone,
+					work: work_phone
+				}
+			],
+			address: [
+				{
+					street_address: street_address,
+					city: city,
+					state: state,
+					zipcode: zipcode
+				}
+			]
         }).then(function(ref){
             var id = ref.key();
             console.log('Added contact with ID: '+id);
@@ -73,9 +73,27 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
             $scope.addFormShow = false;
             
             // Show message to user
-            $scope.msg = "איש הקשר נוסף! רמת הסכיזואיזם שלך במגמת ירידה"
+            $scope.msg = "איש הקשר נוסף. רמת הסכיזואיזם שלך במגמת ירידה!"
         });
     }
+    
+    // Fetch contact entire details when user clicks contact name
+   $scope.showContact = function(contact){
+		console.log('Getting Contact...');
+
+		$scope.name             = contact.name;
+		$scope.email 			= contact.email;
+		$scope.company 			= contact.company;
+		$scope.work_phone 		= contact.phones[0].work;
+		$scope.home_phone 		= contact.phones[0].home;
+		$scope.mobile_phone 	= contact.phones[0].mobile;
+		$scope.street_address 	= contact.address[0].street_address;
+		$scope.city 			= contact.address[0].city;
+		$scope.state 			= contact.address[0].state;
+		$scope.zipcode 			= contact.address[0].zipcode;
+
+		$scope.contactShow = true;
+	}
     
     // Clear all form fields by asigning scopes to an empty string
     function clearFields() {
@@ -89,6 +107,6 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 		$scope.street_address = "";
 		$scope.city = "";
 		$scope.state = "";
-		$scope.zip = ""
+		$scope.zipcode = ""
     }
 }]);
