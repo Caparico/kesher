@@ -22,6 +22,24 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
     $scope.showAddForm = function (){
         $scope.addFormShow = true;
     }
+    
+    // reveal the edit contact form when 'Edit' button is clicked
+    $scope.showEditForm = function(contact){
+        $scope.editFormShow = true;
+        
+        $scope.id               = contact.$id;
+        $scope.name             = contact.name;
+		$scope.email 			= contact.email;
+		$scope.company 			= contact.company;
+        $scope.mobile_phone 	= contact.phones[0].mobile;
+		$scope.home_phone 		= contact.phones[0].home;	
+        $scope.work_phone 		= contact.phones[0].work;	
+		$scope.street_address 	= contact.address[0].street_address;
+		$scope.city 			= contact.address[0].city;
+		$scope.state 			= contact.address[0].state;
+		$scope.zipcode 			= contact.address[0].zipcode;
+    }
+    
     // hide the form when button with hide is clicked
     $scope.hide = function (){
         $scope.addFormShow = false;
@@ -77,6 +95,42 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
             // Show message to user
             $scope.msg = "איש הקשר נוסף. הסכיזואיזם שלך במגמת ירידה!"
         });
+    }
+    
+    $scope.editFormSubmit = function() {
+        console.log('Updating Contact...');
+        
+        //get ID
+        var id = $scope.id;
+        
+        // get record 
+        var record = $scope.contacts.$getRecord(id);
+        
+        //assign values to the record
+		record.name = $scope.name;
+		record.email = $scope.email; 
+		record.company = $scope.company;
+		record.phones[0].work = $scope.work_phone;
+		record.phones[0].mobilee = $scope.mobile_phone;
+		record.phones[0].home = $scope.home_phone;
+		record.address[0].street = $scope.street_address;
+		record.address[0].city = $scope.city;
+		record.address[0].state = $scope.state;
+		record.address[0].zipcode = $scope.zipcode;
+        
+        // Save & update the contact
+        $scope.contacts.$save(record).then(function(ref) {
+            console.log(ref.key);
+        });
+        
+        // Clear the form fields
+        clearFields();
+        
+        // Hide the editing form
+        $scope.editFormShow = false;
+        
+        // Show success message
+        $scope.msg = "איש הקשר עודכן בהצלחה!";
     }
     
     // Fetch contact entire details when user clicks contact name
