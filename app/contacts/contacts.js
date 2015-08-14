@@ -151,6 +151,15 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 		$scope.contactShow = true;
 	}
     
+   // Remove contact when the 'Delete' button next to it is clicked
+   $scope.removeContact = function(contact) {
+       console.log('Removing Contact');
+       
+       $scope.contacts.$remove(contact);
+       
+       $scope.msg = '...איש הקשר נמחק. חבל, יא סכיזואידית';
+   }
+   
     // Clear all form fields by asigning scopes to an empty string
     function clearFields() {
         console.log('Clearing all fields...');
