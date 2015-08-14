@@ -7,20 +7,23 @@
     <div class="row" ng-show="contactShow">
         <div class="panel">
             <h3>{{name}}</h3>
-            <ul>
-                <li><strong>חברה</strong>: {{company}}</li>
+            <ul>          
+                <li><strong>נייד</strong>: {{mobile_phone}}</li>
                 <li><strong>אימייל</strong>: {{email}}</li>
                 <h5>מספרי טלפון</h5>
                 <li><strong>עבודה</strong>: {{work_phone}}</li>
-                <li><strong>בית</strong>: {{home_phone}}</li>
-                <li><strong>נייד</strong>: {{mobile_phone}}</li>
+                <li><strong>חברה</strong>: {{company}}</li>
+                <li><strong>בית</strong>: {{home_phone}}</li>                
                 <h5>כתובת</h5>
                 <li>{{street_address}}</li>
                 <li>{{city}}, {{state}} {{zipcode}}</li>
             </ul>
+            <a class="button large" ng-click="hide()" ng-show="contactShow">הסתרה</a>
         </div>
     </div>
     <!--    End contact details-->
+      
+<!--      Add a new contact-->
   <form ng-submit="addFormSubmit()" ng-show="addFormShow">
 		<h3>הוספת אנשי קשר</h3>
 		<div class="row">			
@@ -90,13 +93,86 @@
 			</div>
 		</div>
 	</form>
-     
+<!--      End form for adding a new contact-->
+      
+      <!--      Edit contact-->
+  <form ng-submit="addFormSubmit()" ng-show="addFormShow">
+		<h3>הוספת אנשי קשר</h3>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>אימייל:
+					<input type="text" ng-model="email" placeholder="אימייל" required />
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>שם:
+					<input type="text" ng-model="name" placeholder="שם" required tabindex=1/>
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>טלפון בעבודה:
+					<input type="text" ng-model="work_phone" placeholder="טלפון בעבודה"/>
+				</label>
+			</div>
+            <div class="large-6 columns">
+				<label>מקום העבודה:
+					<input type="text" ng-model="company" placeholder="שם מקום העבודה" />
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>טלפון בבית:
+					<input type="text" ng-model="home_phone" placeholder="טלפון בבית"/>
+				</label>
+			</div>
+		    <div class="large-6 columns">
+				<label>נייד:
+					<input type="text" ng-model="mobile_phone" placeholder="נייד"/>
+				</label>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="large-6 columns">
+				<label>עיר:
+					<input type="text" ng-model="city" placeholder="עיר"/>
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>כתובת:
+					<input type="text" ng-model="street_address" placeholder="כתובת"/>
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 columns">
+				<label>מדינה:
+					<input type="text" ng-model="state" placeholder="מדינה"/>
+				</label>
+			</div>
+			<div class="large-6 columns">
+				<label>מיקוד:
+					<input type="text" ng-model="zipcode" placeholder="מיקוד"/>
+				</label>
+			</div>
+		
+		</div>
+		<div class="row">
+			<div class="large-12 column">
+				<input type="submit" value="הוספה" class="button">
+			</div>
+		</div>
+	</form>
+<!--      End edit contact-->
+<!--     Table showing existing contacts-->
     <h3>אנשי הקשר שלך ({{contacts.length}})</h3>
     <table>
         <thead>
             <tr>
                 <th width="200px;">שם</th>
-                <th width="200px;">חברה</th>
+                <th width="200px;">נייד</th>
                 <th width="25%;">אימייל</th>
                 <th width="25%;">פעולות</th>
             </tr>
@@ -104,7 +180,7 @@
         <tbody>
             <tr ng-repeat="contact in contacts">
                 <td><a ng-click="showContact(contact)">{{contact.name}}</a></td>
-                <td>{{contact.company}}</td>
+                <td>{{contact.phones[0].mobile}}</td>
                 <td>{{contact.email}}</td>
                 <td>
                     <a class="button tiny" ng-click="showEditForm(contact)">עריכה</a>
@@ -113,9 +189,11 @@
             </tr>
         </tbody>
     </table>
+<!--      End - Table showing existing contacts-->
     </div>
+<!--    Buttons for adding new contact or hide contact details-->
     <div class="small-12 large-2 columns">
         <a class="button large" ng-click="showAddForm()" ng-hide="addFormShow">+</a>
-        <a class="button large" ng-click="hide()" ng-show="addFormShow">-</a>
+        <a class="button large" ng-click="hide()" ng-show="addFormShow">-</a>        
     </div>
 </div>

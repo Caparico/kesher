@@ -25,6 +25,7 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
     // hide the form when button with hide is clicked
     $scope.hide = function (){
         $scope.addFormShow = false;
+        $scope.contactShow = false;
     }
     // submit the form upon clicking the form's submit button
     $scope.addFormSubmit = function () {
@@ -41,6 +42,7 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 		if ($scope.city) { var city = $scope.city } else { city = null; }
 		if ($scope.state) { var state = $scope.state } else { state = null; }
 		if ($scope.zipcode) { var zipcode = $scope.zipcode } else { zipcode = null; }
+        
         
         // Build the object being sent to firebase
         $scope.contacts.$add({
@@ -73,7 +75,7 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
             $scope.addFormShow = false;
             
             // Show message to user
-            $scope.msg = "איש הקשר נוסף. רמת הסכיזואיזם שלך במגמת ירידה!"
+            $scope.msg = "איש הקשר נוסף. הסכיזואיזם שלך במגמת ירידה!"
         });
     }
     
@@ -84,9 +86,9 @@ angular.module('kesher.contacts', ['ngRoute', 'firebase'])
 		$scope.name             = contact.name;
 		$scope.email 			= contact.email;
 		$scope.company 			= contact.company;
-		$scope.work_phone 		= contact.phones[0].work;
-		$scope.home_phone 		= contact.phones[0].home;
-		$scope.mobile_phone 	= contact.phones[0].mobile;
+        $scope.mobile_phone 	= contact.phones[0].mobile;
+		$scope.home_phone 		= contact.phones[0].home;	
+        $scope.work_phone 		= contact.phones[0].work;	
 		$scope.street_address 	= contact.address[0].street_address;
 		$scope.city 			= contact.address[0].city;
 		$scope.state 			= contact.address[0].state;
